@@ -25,3 +25,16 @@ fi
 # 3. Fetch element data from the database using JOINs
 # Combines elements, properties, and types tables to get all required info
 ELEMENT_DATA=$($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements JOIN properties USING(atomic_number) JOIN types USING(type_id) WHERE $WHERE_CONDITION")
+
+# 4. Handle the query result
+if [[ -z $ELEMENT_DATA ]]
+then
+  # If no data found, output the error message
+  echo "I could not find that element in the database."
+else
+  # If found, parse the bar-separated string and print the formatted sentence
+  echo "$ELEMENT_DATA" | while IFS="|" read ATOMIC_NUMBER NAME SYMBOL TYPE MASS MELTING BOILING
+  do
+    echo "The element with atomic number $ATOMIC_NUMBER is $NAME ($SYMBOL). It's a $TYPE, with a mass of $MASS amu. $NAME has a melting point of $MELTING celsius and a boiling point of $BOILING celsius."
+  done
+fi
