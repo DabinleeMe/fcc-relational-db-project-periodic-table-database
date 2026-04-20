@@ -18,6 +18,8 @@ This project is a relational database of chemical elements integrated with a Bas
    ```bash
    git clone https://github.com/DabinleeMe/fcc-relational-db-project-periodic-table-database.git
 2. Make the script executable:
+   ```bash
     chmod +x element.sh 
-3. Run the Script:
+4. Run the Script:
+   ```bash
     ./element.sh [number, symbol, or name]
